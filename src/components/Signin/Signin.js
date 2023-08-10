@@ -3,7 +3,7 @@ import "./Signin.css";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import "../../Firebase";
 
-const Signin = () => {
+const Signin = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -35,9 +35,15 @@ const Signin = () => {
     setPassword("");
   };
 
+  function toggleSignupPopup() {
+    props.setPopup(true);
+    props.setSigninPopup(false);
+    props.setSignupPopup(true);
+  }
+
   return (
     <div>
-      <h2>Signin</h2>
+      <h2>Sign in</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email:</label>
@@ -60,6 +66,9 @@ const Signin = () => {
           />
         </div>
         <button type="submit">Signin</button>
+        <button type="button" onClick={toggleSignupPopup}>
+          Sign Up
+        </button>
       </form>
       {error && <p className="error">{error}</p>}
     </div>
