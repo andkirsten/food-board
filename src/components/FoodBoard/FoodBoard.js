@@ -1,12 +1,12 @@
 import React from "react";
 import "./FoodBoard.css";
 
-function FoodBoard() {
+const FoodBoard = () => {
   return (
     <div>
-      <h1>FoodBoard</h1>
+      <h2>FoodBoard</h2>
     </div>
   );
-}
+};
 
 export default FoodBoard;
