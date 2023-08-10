@@ -5,6 +5,8 @@ import Register from "../Register/Register";
 import FoodBoard from "../FoodBoard/FoodBoard";
 
 import "./App.css";
+import AddPost from "../AddPost/AddPost";
+import "../../Firebase";
 
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
       <FoodBoard />
       <Signin />
       <Register />
+      <AddPost />
     </div>
   );
 }
