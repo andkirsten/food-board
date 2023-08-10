@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import "firebase/auth";
 import "./Signin.css";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import "../../Firebase";
-import { auth } from "../../Firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+
+  let auth = getAuth();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
