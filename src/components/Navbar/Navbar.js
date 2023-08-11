@@ -1,51 +1,67 @@
 import React from "react";
 import "./Navbar.css";
 import logo from "../../FoodShareLogo.png";
+import Button from "react-bootstrap/Button";
+import Navbar from "react-bootstrap/Navbar";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
-function Navbar(props) {
-  function toggleSigninPopup() {
+function NavigationBar(props) {
+  const handleOpenSigninPopup = () => {
     props.setPopup(true);
     props.setSigninPopup(true);
-    props.setSignupPopup(false);
-  }
-  function toggleNewPostPopup() {
+    props.setRegisterPopup(false);
+  };
+
+  const handleOpenAddPostPopup = () => {
     props.setPopup(true);
     props.setAddPostPopup(true);
-    console.log("TEST");
-  }
+  };
+
+  const handleSigninButton = () => {
+    handleOpenSigninPopup();
+    console.log("Sign in Button Clicked");
+  };
+  const handleAddPostButton = () => {
+    handleOpenAddPostPopup();
+    console.log("Add Post Button Clicked");
+  };
+
+  const { logOut, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignout = async () => {
+    try {
+      await logOut();
+      console.log("User signed out successfully!");
+      navigate("/");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
 
   return (
-    <div className="navbar">
-      <img src={logo} alt="logo" className="logo" />
-      <h1>Food Board</h1>
-      <div className="links">
-        {props.isLoggedIn ? (
+    <Navbar expand="lg" className="bg-light">
+      <Navbar.Brand href="/">
+        <img src={logo} alt="logo" className="logo" />
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+        {user ? (
           <div>
-            <button
-              // onClick={handleSignout}
-              className={`header__logout }`}
-            >
+            <Button onClick={handleSignout} className={`header__logout }`}>
               Log Out
-              {/* {`${currentUser.name}`} */}
-            </button>
-            {/* <a href="/create">New Post</a> */}
-            <button onClick={toggleNewPostPopup}>New Post</button>
+            </Button>
+            <Button onClick={handleAddPostButton}>New Post</Button>
           </div>
         ) : (
-          <button
-            // onClick={togglePopup}
-            onClick={toggleSigninPopup}
-            className="header__signin"
-          >
+          <Button onClick={handleSigninButton} className="header__signin">
             Sign in
-          </button>
+          </Button>
         )}
-
-        {/* <a href="/signin">Signin</a> */}
-        {/* <a href="/create">New Post</a> */}
-      </div>
-    </div>
+      </Navbar.Collapse>
+    </Navbar>
   );
 }
 
-export default Navbar;
+export default NavigationBar;

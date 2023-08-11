@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+
 import "./Register.css";
-import { getAuth } from "firebase/auth";
+import Alert from "react-bootstrap/Alert";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  React.useEffect(() => {
-    // console.log("Registration component is mounted");
-  }, []);
+  const [error, setError] = useState(null);
+  const { register } = useAuth();
+  let navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -21,10 +24,11 @@ const Registration = () => {
 
   const registerUser = async (event) => {
     event.preventDefault();
-    let auth = getAuth();
+    setError(null);
     try {
       // Create a new user
-      await createUserWithEmailAndPassword(auth, email, password)
+      await register(email, password);
+      navigate("/")
         .then(() => {
           console.log("User is created: ");
         })
@@ -42,7 +46,31 @@ const Registration = () => {
 
   return (
     <div>
-      <h2>Register</h2>
+      {error && <Alert variant="danger">{error}</Alert>}
+      <Form onSubmit={registerUser}>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            onChange={handleEmailChange}
+          />
+          <Form.Text className="text-muted"></Form.Text>
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Enter Password"
+            onChange={handlePasswordChange}
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Register
+        </Button>
+      </Form>
+
+      {/* <h2>Register</h2>
       <form onSubmit={registerUser}>
         <div>
           <label htmlFor="email">Email:</label>
@@ -65,7 +93,7 @@ const Registration = () => {
           />
         </div>
         <button type="submit">Register</button>
-      </form>
+      </form>*/}
     </div>
   );
 };

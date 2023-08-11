@@ -1,75 +1,83 @@
 import React from "react";
-import Navbar from "../Navbar/Navbar";
+import Navigationbar from "../Navbar/Navbar";
 import Signin from "../Signin/Signin";
 import Register from "../Register/Register";
 import FoodBoard from "../FoodBoard/FoodBoard";
 import Popup from "../Popup/Popup";
-
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import AddPost from "../AddPost/AddPost";
-import "../../Firebase";
+import "react-bootstrap";
+
+import { AuthContextProvider } from "../../context/AuthContext";
 
 function App() {
   const [isPopupOpen, setPopup] = React.useState(false);
-  const [isSigninPopupOpen, setSigninPopup] = React.useState(false);
-  const [isSignupPopupOpen, setSignupPopup] = React.useState(false);
+
   const [isAddPostPopupOpen, setAddPostPopup] = React.useState(false);
-  const [isLoggedIn, setLoggedIn] = React.useState(false);
+
+  const [isRegisterPopupOpen, setRegisterPopup] = React.useState(false);
+
+  const [isSigninPopupOpen, setSigninPopup] = React.useState(false);
 
   return (
     <div className="App">
-      <Navbar
-        isLoggedIn={isLoggedIn}
-        setPopup={setPopup}
-        setSigninPopup={setSigninPopup}
-        setSignupPopup={setSignupPopup}
-        setAddPostPopup={setAddPostPopup}
-      />
-      <FoodBoard />
-      {/* <Signin /> */}
-      {/* <Register /> */}
-      {/* <AddPost /> */}
-      {isSigninPopupOpen ? (
-        <Popup
+      <AuthContextProvider>
+        <Navigationbar
           setPopup={setPopup}
-          setFormPopup={setSigninPopup}
-          isPopupOpen={isPopupOpen}
-        >
-          <Signin
+          setSigninPopup={setSigninPopup}
+          setRegisterPopup={setRegisterPopup}
+          setAddPostPopup={setAddPostPopup}
+        />
+        <Routes>
+          <Route path="/" element={<FoodBoard />} />
+          {/* <Route path="/signin" element={<Signin />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/addpost" element={<AddPost />} /> */}
+        </Routes>
+
+        {isSigninPopupOpen ? (
+          <Popup
             setPopup={setPopup}
-            setSigninPopup={setSigninPopup}
-            setSignupPopup={setSignupPopup}
-          />
-        </Popup>
-      ) : (
-        ""
-      )}
-      {isSignupPopupOpen ? (
-        <Popup
-          setPopup={setPopup}
-          setFormPopup={setSigninPopup}
-          isPopupOpen={isPopupOpen}
-        >
-          <Register
+            setFormPopup={setSigninPopup}
+            isPopupOpen={isPopupOpen}
+          >
+            <Signin
+              setPopup={setPopup}
+              setSigninPopup={setSigninPopup}
+              setSignupPopup={setRegisterPopup}
+            />
+          </Popup>
+        ) : (
+          ""
+        )}
+        {isRegisterPopupOpen ? (
+          <Popup
             setPopup={setPopup}
-            setSigninPopup={setSigninPopup}
-            setSignupPopup={setSignupPopup}
-          />
-        </Popup>
-      ) : (
-        ""
-      )}
-      {isLoggedIn && isAddPostPopupOpen ? (
-        <Popup
-          setPopup={setPopup}
-          setFormPopup={setSigninPopup}
-          isPopupOpen={isPopupOpen}
-        >
-          <AddPost setPopup={setPopup} />
-        </Popup>
-      ) : (
-        ""
-      )}
+            setFormPopup={setSigninPopup}
+            isPopupOpen={isPopupOpen}
+          >
+            <Register
+              setPopup={setPopup}
+              setSigninPopup={setSigninPopup}
+              setSignupPopup={setRegisterPopup}
+            />
+          </Popup>
+        ) : (
+          ""
+        )}
+        {isAddPostPopupOpen ? (
+          <Popup
+            setPopup={setPopup}
+            setFormPopup={setSigninPopup}
+            isPopupOpen={isPopupOpen}
+          >
+            <AddPost setPopup={setPopup} />
+          </Popup>
+        ) : (
+          ""
+        )}
+      </AuthContextProvider>
     </div>
   );
 }

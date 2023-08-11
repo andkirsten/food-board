@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import "./Signin.css";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import "../../Firebase";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 const Signin = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-
-  let auth = getAuth();
+  const { logIn } = useAuth();
+  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -23,9 +25,10 @@ const Signin = (props) => {
 
     try {
       // Sign in the user
-      await signInWithEmailAndPassword(auth, email, password);
+      await logIn(email, password);
       console.log("User signed in successfully!");
       setError(null); // Clear any previous errors
+      navigate("/");
     } catch (error) {
       setError(error.message);
       console.error("Error signing in:", error);
@@ -33,6 +36,8 @@ const Signin = (props) => {
     // Reset form fields
     setEmail("");
     setPassword("");
+    setError(null);
+    props.setPopup(false);
   };
 
   function toggleSignupPopup() {
@@ -43,33 +48,29 @@ const Signin = (props) => {
 
   return (
     <div>
-      <h2>Sign in</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
             type="email"
-            id="signin-email"
-            value={email}
+            placeholder="Enter email"
             onChange={handleEmailChange}
-            required
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
+          <Form.Text className="text-muted"></Form.Text>
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
             type="password"
-            id="signin-password"
-            value={password}
+            placeholder="Enter Password"
             onChange={handlePasswordChange}
-            required
           />
-        </div>
-        <button type="submit">Signin</button>
-        <button type="button" onClick={toggleSignupPopup}>
+        </Form.Group>
+        <Button type="submit">Signin</Button>
+        <Button type="button" onClick={toggleSignupPopup}>
           Sign Up
-        </button>
-      </form>
+        </Button>
+      </Form>
       {error && <p className="error">{error}</p>}
     </div>
   );
