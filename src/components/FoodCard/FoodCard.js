@@ -1,23 +1,25 @@
 import React from "react";
 import "./FoodCard.css";
+import Card from "react-bootstrap/Card";
 
 const FoodCard = (props) => {
   return (
-    <li className="food-card">
-      <img
-        className="food-card__image"
-        src={props.card.image}
+    <Card style={{ width: "18em" }}>
+      <Card.Header>{props.card.title}</Card.Header>
+      <Card.Img
+        variant="top"
+        src={props.card.photoUrl}
         alt={props.card.title}
       />
-      <div className="food-card__info-container">
-        <div className="food-card__info">
-          <p className="food-card__date">{props.card.date}</p>
-          <p className="food-card__location">{props.card.location}</p>
-        </div>
-        <h3 className="food-card__title">{props.card.title}</h3>
-        <p className="food-card__details">{props.card.details}</p>
-      </div>
-    </li>
+      <Card.Body>
+        <Card.Title>{props.card.date}</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">
+          {props.card.foodType}
+        </Card.Subtitle>
+        <Card.Text>{props.card.details}</Card.Text>
+        <Card.Link variant="primary">Mark Claimed</Card.Link>
+      </Card.Body>
+    </Card>
   );
 };
 

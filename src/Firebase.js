@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyD4HJ4LFp2wNkNvCvW5rCW8-8iLyR0phBs",
   authDomain: "food-share-25d01.firebaseapp.com",
@@ -11,5 +12,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
+export const firestore = getFirestore(app);
+export const auth = getAuth(app);
 export default app;

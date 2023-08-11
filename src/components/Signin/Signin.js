@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import "./Signin.css";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import "../../Firebase";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Signin = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-
-  let auth = getAuth();
+  const { logIn } = useAuth();
+  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -23,9 +23,10 @@ const Signin = (props) => {
 
     try {
       // Sign in the user
-      await signInWithEmailAndPassword(auth, email, password);
+      await logIn(email, password);
       console.log("User signed in successfully!");
       setError(null); // Clear any previous errors
+      navigate("/");
     } catch (error) {
       setError(error.message);
       console.error("Error signing in:", error);

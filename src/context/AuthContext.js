@@ -1,36 +1,46 @@
 import React from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import "../../Firebase";
+import { auth } from "../Firebase";
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { useState, useEffect, useContext } from "react";
 
 const AuthContext = React.createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = React.useState(null);
-  const [pending, setPending] = React.useState(true);
+export const AuthContextProvider = ({ children }) => {
+  const [user, setUser] = useState({});
 
-  let auth = getAuth();
-
-  React.useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      setPending(false);
-    });
-
-    return unsubscribe; // Clean up the listener when the component unmounts
-  }, [auth]);
-
-  if (pending) {
-    // You might want to render a loading indicator while the authentication state is being checked
-    return <div>Loading...</div>;
+  function logIn(email, password) {
+    return signInWithEmailAndPassword(auth, email, password);
+  }
+  function register(email, password) {
+    return createUserWithEmailAndPassword(auth, email, password);
+  }
+  function logOut() {
+    return signOut(auth);
   }
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
+      console.log("Auth", currentuser);
+      setUser(currentuser);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider value={{ user, logIn, register, logOut }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  return React.useContext(AuthContext);
-};
+export function useAuth() {
+  return useContext(AuthContext);
+}
