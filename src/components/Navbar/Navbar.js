@@ -11,6 +11,7 @@ function NavigationBar(props) {
     props.setPopup(true);
     props.setSigninPopup(true);
     props.setRegisterPopup(false);
+    props.setAddPostPopup(false);
   };
 
   const handleOpenAddPostPopup = () => {
@@ -49,14 +50,16 @@ function NavigationBar(props) {
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         {user ? (
           <div>
-            <Button onClick={handleSignout} className={`header__logout }`}>
+            <Button onClick={handleAddPostButton} className={`header__newpost`}>
+              New Post
+            </Button>
+            <Button onClick={handleSignout} className={`header__logout`}>
               Log Out
             </Button>
-            <Button onClick={handleAddPostButton}>New Post</Button>
           </div>
         ) : (
           <Button onClick={handleSigninButton} className="header__signin">
-            Sign in
+            Sign In
           </Button>
         )}
       </Navbar.Collapse>

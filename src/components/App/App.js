@@ -41,11 +41,13 @@ function App() {
             setPopup={setPopup}
             setFormPopup={setSigninPopup}
             isPopupOpen={isPopupOpen}
+            title={"Sign In"}
           >
             <Signin
               setPopup={setPopup}
               setSigninPopup={setSigninPopup}
               setSignupPopup={setRegisterPopup}
+              setAddPostPopup={setAddPostPopup}
             />
           </Popup>
         ) : (
@@ -56,11 +58,13 @@ function App() {
             setPopup={setPopup}
             setFormPopup={setSigninPopup}
             isPopupOpen={isPopupOpen}
+            title={"Sign Up"}
           >
             <Register
               setPopup={setPopup}
               setSigninPopup={setSigninPopup}
               setSignupPopup={setRegisterPopup}
+              setAddPostPopup={setAddPostPopup}
             />
           </Popup>
         ) : (
@@ -71,6 +75,7 @@ function App() {
             setPopup={setPopup}
             setFormPopup={setSigninPopup}
             isPopupOpen={isPopupOpen}
+            title={"Add Post"}
           >
             <AddPost setPopup={setPopup} />
           </Popup>
