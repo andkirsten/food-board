@@ -1,0 +1,78 @@
+.food-card {
+  width: 400px;
+  border-radius: 19px;
+  position: relative;
+  background-color: #ffffff;
+  color: #000000;
+  list-style: none;
+  border-color: #000000;
+  border-style: solid;
+}
+
+/* .food-card__delete-button {
+  height: 40px;
+  width: 40px;
+  background-color: #fff;
+  border: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+} */
+
+.food-card__image {
+  width: 100%;
+  border-radius: 16px 16px 0 0;
+}
+
+.food-card__info-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.food-card__date {
+  font-size: 16px;
+  line-height: 24px;
+  margin: auto 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.food-card__location {
+  font-size: 16px;
+  line-height: 20px;
+  margin: auto 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.food-card__title {
+  font-size: 26px;
+  line-height: 30px;
+  margin: 10px 0 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.food-card__details {
+  font-size: 16px;
+  line-height: 22px;
+  margin: 10px 0 0;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.food-card__info {
+  display: flex;
+  justify-content: space-between;
+}

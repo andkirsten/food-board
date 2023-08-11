@@ -8,7 +8,7 @@ const Registration = () => {
   const [password, setPassword] = useState("");
 
   React.useEffect(() => {
-    console.log("Registration component is mounted");
+    // console.log("Registration component is mounted");
   }, []);
 
   const handleEmailChange = (event) => {
