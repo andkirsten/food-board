@@ -10,7 +10,7 @@ const FoodBoard = () => {
   const [cards, setCards] = React.useState(savedCards);
 
   const fetchPosts = async () => {
-    await getDocs(collection(firestore, "Post"))
+    await getDocs(collection(firestore, "posts"))
       .then((querySnapshot) => {
         const data = querySnapshot.docs.map((doc) => doc.data());
         setCards(data);

@@ -1,5 +1,6 @@
 import React from "react";
 import "./Popup.css";
+import Modal from "react-bootstrap/Modal";
 
 const Popup = (props) => {
   function closePopup() {
@@ -7,14 +8,12 @@ const Popup = (props) => {
     props.setFormPopup(false);
   }
   return (
-    <section className={`modal ${props.isPopupOpen ? "modal_visible" : ""}`}>
-      <div className={`popup ${props.isPopupOpen ? "popup_visible" : ""}`}>
-        <div className="popup__container">
-          <i className="popup__exit" onClick={closePopup}></i>
-          {props.children}
-        </div>
-      </div>
-    </section>
+    <Modal show={props.isPopupOpen} onHide={closePopup}>
+      <Modal.Header closeButton>
+        <Modal.Title>{props.title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>{props.children}</Modal.Body>
+    </Modal>
   );
 };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import "./FoodCard.css";
 import Card from "react-bootstrap/Card";
+import Produce from "../../defaultImages/produce.png";
 
 const FoodCard = (props) => {
   return (
@@ -8,7 +9,7 @@ const FoodCard = (props) => {
       <Card.Header>{props.card.title}</Card.Header>
       <Card.Img
         variant="top"
-        src={props.card.photoUrl}
+        src={props.card.photoUrl ? props.card.photoUrl : Produce}
         alt={props.card.title}
       />
       <Card.Body>

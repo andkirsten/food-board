@@ -3,16 +3,20 @@ import { firestore } from "../../Firebase";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import "./AddPost.css";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import { useAuth } from "../../context/AuthContext";
 
-const AddPost = () => {
+const AddPost = (props) => {
+  const { user } = useAuth();
+
   const titleRef = useRef(null);
   const detailsRef = useRef(null);
   const foodTypeRef = useRef("produce");
   const photoRef = useRef(null);
   const pickupLocationRef = useRef(null);
-  const claimedRef = useRef(false);
 
-  const handleSubmit = async (event) => {
+  const handleAddSubmit = async (event) => {
     event.preventDefault();
 
     try {
@@ -21,9 +25,9 @@ const AddPost = () => {
       const foodType = foodTypeRef.current.value;
       const photo = photoRef.current.files[0];
       const pickupLocation = pickupLocationRef.current.value;
-      const claimed = claimedRef.current.checked;
+      const claimed = false;
       const date = new Date().toISOString();
-      const owner = "test-user";
+      const owner = user.uid;
 
       if (photo) {
         const storage = getStorage();
@@ -32,7 +36,18 @@ const AddPost = () => {
 
         const photoUrl = await getDownloadURL(storageRef);
 
-        await addDoc(collection(firestore, "Post"), {
+        console.log(
+          title,
+          details,
+          foodType,
+          photoUrl,
+          pickupLocation,
+          claimed,
+          date,
+          owner
+        );
+
+        await addDoc(collection(firestore, "posts"), {
           title,
           details,
           foodType,
@@ -46,11 +61,11 @@ const AddPost = () => {
         titleRef.current.value = "";
         detailsRef.current.value = "";
         foodTypeRef.current.value = "produce";
-        photoRef.current.value = null;
+        photoRef.current.value = "";
         pickupLocationRef.current.value = "";
-        claimedRef.current.checked = false;
 
         console.log("Post added successfully!");
+        props.setPopup(false);
       }
     } catch (error) {
       console.error("Error adding post:", error);
@@ -59,46 +74,46 @@ const AddPost = () => {
 
   return (
     <div>
-      <h2>Add Post</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title:</label>
-          <input type="text" id="title" ref={titleRef} required />
-        </div>
-        <div>
-          <label htmlFor="details">Details:</label>
-          <textarea id="details" ref={detailsRef} required />
-        </div>
-        <div>
-          <label htmlFor="food-type">Food Type:</label>
-          <select name="food-type" id="food-type" ref={foodTypeRef} required>
+      <Form onSubmit={handleAddSubmit}>
+        <Form.Group controlId="postTitle">
+          <Form.Label>Title</Form.Label>
+          <Form.Control type="text" placeholder="Enter title" ref={titleRef} />
+        </Form.Group>
+        <Form.Group controlId="postDetails">
+          <Form.Label>Details</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter details"
+            ref={detailsRef}
+          />
+        </Form.Group>
+        <Form.Group controlId="postFoodType">
+          <Form.Label>Select Food Type</Form.Label>
+          <Form.Select aria-label="Food Type Select" ref={foodTypeRef}>
             <option value="produce">Produce</option>
             <option value="meat">Meat</option>
             <option value="canned">Canned Goods</option>
             <option value="pantry">Pantry Staples: flour, sugar, etc.</option>
             <option value="baby">Baby Food or Formula</option>
             <option value="other">Other</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="photo">Photo:</label>
-          <input type="file" id="photo" accept="image/*" ref={photoRef} />
-        </div>
-        <div>
-          <label htmlFor="pickup-location">Pickup Location:</label>
-          <input
+          </Form.Select>
+        </Form.Group>
+        <Form.Group controlId="postPhoto">
+          <Form.Label>Photo</Form.Label>
+          <Form.Control type="file" ref={photoRef} />
+        </Form.Group>
+        <Form.Group controlId="postPickupLocation">
+          <Form.Label>Pickup Location</Form.Label>
+          <Form.Control
             type="text"
-            id="pickup-location"
+            placeholder="Enter pickup location"
             ref={pickupLocationRef}
-            required
           />
-        </div>
-        <div>
-          <label htmlFor="claimed">Claimed:</label>
-          <input type="checkbox" id="claimed" ref={claimedRef} />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
     </div>
   );
 };

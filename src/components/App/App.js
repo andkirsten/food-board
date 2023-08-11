@@ -20,39 +20,14 @@ function App() {
 
   const [isSigninPopupOpen, setSigninPopup] = React.useState(false);
 
-  const handlePopup = () => {
-    setPopup(true);
-    setSigninPopup(true);
-    setRegisterPopup(false);
-    setAddPostPopup(false);
-  };
-  const handleSigninPopup = () => {
-    setPopup(true);
-    setSigninPopup(true);
-    setRegisterPopup(false);
-    setAddPostPopup(false);
-  };
-  const handleRegisterPopup = () => {
-    setPopup(true);
-    setSigninPopup(false);
-    setRegisterPopup(true);
-    setAddPostPopup(false);
-  };
-  const handleAddPostPopup = () => {
-    setPopup(true);
-    setSigninPopup(false);
-    setRegisterPopup(false);
-    setAddPostPopup(true);
-  };
-
   return (
     <div className="App">
       <AuthContextProvider>
         <Navigationbar
-          handlePopup={handlePopup}
-          handleSigninPopup={handleSigninPopup}
-          handleRegisterPopup={handleRegisterPopup}
-          handleAddPostPopup={handleAddPostPopup}
+          setPopup={setPopup}
+          setSigninPopup={setSigninPopup}
+          setRegisterPopup={setRegisterPopup}
+          setAddPostPopup={setAddPostPopup}
         />
         <Routes>
           <Route path="/" element={<FoodBoard />} />

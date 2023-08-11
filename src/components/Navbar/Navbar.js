@@ -7,15 +7,25 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 function NavigationBar(props) {
-  // function toggleSigninPopup() {
-  //   props.setPopup(true);
-  //   props.setSigninPopup(true);
-  //   props.setSignupPopup(false);
-  // }
-  // function toggleNewPostPopup() {
-  //   props.setPopup(true);
-  //   props.setAddPostPopup(true);
-  // }
+  const handleOpenSigninPopup = () => {
+    props.setPopup(true);
+    props.setSigninPopup(true);
+    props.setRegisterPopup(false);
+  };
+
+  const handleOpenAddPostPopup = () => {
+    props.setPopup(true);
+    props.setAddPostPopup(true);
+  };
+
+  const handleSigninButton = () => {
+    handleOpenSigninPopup();
+    console.log("Sign in Button Clicked");
+  };
+  const handleAddPostButton = () => {
+    handleOpenAddPostPopup();
+    console.log("Add Post Button Clicked");
+  };
 
   const { logOut, user } = useAuth();
   const navigate = useNavigate();
@@ -41,45 +51,17 @@ function NavigationBar(props) {
           <div>
             <Button onClick={handleSignout} className={`header__logout }`}>
               Log Out
-              {`${user.name}`}
             </Button>
-            <Button onClick={props.handleAddPostPopup}>New Post</Button>
+            <Button onClick={handleAddPostButton}>New Post</Button>
           </div>
         ) : (
-          <Button onClick={props.handleSigninPopup} className="header__signin">
+          <Button onClick={handleSigninButton} className="header__signin">
             Sign in
           </Button>
         )}
       </Navbar.Collapse>
     </Navbar>
   );
-  // <div className="navbar">
-  //   <img src={logo} alt="logo" className="logo" />
-  //   <h1>Food Board</h1>
-  //   <div className="links">
-  //     {props.isLoggedIn ? (
-  //       <div>
-  //         <Button
-  //           // onClick={handleSignout}
-  //           className={`header__logout }`}
-  //         >
-  //           Log Out
-  //           {/* {`${currentUser.name}`} */}
-  //         </Button>
-  //         {/* <a href="/create">New Post</a> */}
-  //         <Button onClick={toggleNewPostPopup}>New Post</Button>
-  //       </div>
-  //     ) : (
-  //       <Button onClick={toggleSigninPopup} className="header__signin">
-  //         Sign in
-  //       </Button>
-  //     )}
-
-  //     {/* <a href="/signin">Signin</a> */}
-  //     {/* <a href="/create">New Post</a> */}
-  //   </div>
-  // </div>
-  // );
 }
 
 export default NavigationBar;
