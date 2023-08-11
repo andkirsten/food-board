@@ -38,12 +38,14 @@ const Signin = (props) => {
     setPassword("");
     setError(null);
     props.setPopup(false);
+    props.setSigninPopup(false);
   };
 
   function toggleSignupPopup() {
     props.setPopup(true);
     props.setSigninPopup(false);
     props.setSignupPopup(true);
+    props.setAddPostPopup(false);
   }
 
   return (
@@ -66,12 +68,18 @@ const Signin = (props) => {
             onChange={handlePasswordChange}
           />
         </Form.Group>
-        <Button type="submit">Signin</Button>
+        <Button type="submit" className="signin__submit">
+          Signin
+        </Button>
       </Form>
       {error && <p className="error">{error}</p>}
       <p>
         Don't have an account yet?
-        <Button variant="link" onClick={toggleSignupPopup}>
+        <Button
+          variant="link"
+          onClick={toggleSignupPopup}
+          className="signin__signup"
+        >
           Sign Up
         </Button>
       </p>

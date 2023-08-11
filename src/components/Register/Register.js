@@ -61,7 +61,7 @@ const Registration = (props) => {
             onChange={handlePasswordChange}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="register__submit">
           Register
         </Button>
       </Form>
