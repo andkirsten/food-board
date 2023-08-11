@@ -43,7 +43,7 @@ function NavigationBar(props) {
   return (
     <Navbar expand="lg" className="bg-light">
       <Navbar.Brand href="/">
-        <img src={logo} alt="logo" className="logo" />
+        <img src={logo} alt="logo" className="logo" /> Food Share
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">

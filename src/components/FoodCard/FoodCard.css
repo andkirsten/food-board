@@ -1,4 +1,4 @@
-.food-card {
+/* .food-card {
   width: 400px;
   border-radius: 19px;
   position: relative;
@@ -24,7 +24,7 @@
   outline: none;
 } */
 
-.food-card__image {
+/* .food-card__image {
   width: 100%;
   border-radius: 16px 16px 0 0;
 }
@@ -75,4 +75,4 @@
 .food-card__info {
   display: flex;
   justify-content: space-between;
-}
+} */

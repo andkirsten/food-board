@@ -18,6 +18,7 @@ const AddPost = (props) => {
 
   const handleAddSubmit = async (event) => {
     event.preventDefault();
+    console.log("Add submit button clicked");
 
     try {
       const title = titleRef.current.value;
@@ -36,7 +37,7 @@ const AddPost = (props) => {
 
         const photoUrl = await getDownloadURL(storageRef);
 
-        console.log(
+        await addDoc(collection(firestore, "posts"), {
           title,
           details,
           foodType,
@@ -44,14 +45,23 @@ const AddPost = (props) => {
           pickupLocation,
           claimed,
           date,
-          owner
-        );
+          owner,
+        });
 
+        titleRef.current.value = "";
+        detailsRef.current.value = "";
+        foodTypeRef.current.value = "produce";
+        photoRef.current.value = "";
+        pickupLocationRef.current.value = "";
+
+        props.setPopup(false);
+        window.location.reload();
+      } else {
         await addDoc(collection(firestore, "posts"), {
           title,
           details,
           foodType,
-          photoUrl,
+          photoUrl: "",
           pickupLocation,
           claimed,
           date,

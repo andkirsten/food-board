@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const Registration = () => {
+const Registration = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -26,22 +26,18 @@ const Registration = () => {
     event.preventDefault();
     setError(null);
     try {
-      // Create a new user
       await register(email, password);
-      navigate("/")
-        .then(() => {
-          console.log("User is created: ");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      // Reset form fields
-      setEmail("");
-      setPassword("");
+      console.log("User registered successfully!");
+      setError(null);
+      navigate("/");
     } catch (error) {
-      console.log(error);
+      setError(error.message);
+      console.error("Error registering user:", error);
     }
+    setEmail("");
+    setPassword("");
+    setError(null);
+    props.setPopup(false);
   };
 
   return (
@@ -69,31 +65,6 @@ const Registration = () => {
           Register
         </Button>
       </Form>
-
-      {/* <h2>Register</h2>
-      <form onSubmit={registerUser}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="text"
-            id="email"
-            value={email}
-            onChange={handleEmailChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={handlePasswordChange}
-            required
-          />
-        </div>
-        <button type="submit">Register</button>
-      </form>*/}
     </div>
   );
 };

@@ -67,11 +67,14 @@ const Signin = (props) => {
           />
         </Form.Group>
         <Button type="submit">Signin</Button>
-        <Button type="button" onClick={toggleSignupPopup}>
-          Sign Up
-        </Button>
       </Form>
       {error && <p className="error">{error}</p>}
+      <p>
+        Don't have an account yet?
+        <Button variant="link" onClick={toggleSignupPopup}>
+          Sign Up
+        </Button>
+      </p>
     </div>
   );
 };
