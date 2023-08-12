@@ -13,3 +13,21 @@
 .about-body {
   margin: 20px 50px 20px 50px;
 }
+
+.about-footer {
+  margin-top: 20px;
+  font-family: "Lilita One", cursive;
+  font-size: 1.7rem;
+  text-align: right;
+  padding-right: 20px;
+}
+
+.footer-link {
+  color: #000000;
+  text-decoration: none;
+  padding: 0 10px;
+}
+
+.footer-link:hover {
+  color: #000000;
+}

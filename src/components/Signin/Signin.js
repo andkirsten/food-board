@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./Signin.css";
 import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
@@ -10,7 +9,6 @@ const Signin = (props) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const { logIn } = useAuth();
-  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -20,25 +18,34 @@ const Signin = (props) => {
     setPassword(event.target.value);
   };
 
+  function mapAuthCodeToMessage(authCode) {
+    switch (authCode) {
+      case "auth/invalid-email":
+        return "Invalid email";
+      case "auth/user-disabled":
+        return "User disabled";
+      case "auth/user-not-found":
+        return "User not found";
+      case "auth/wrong-password":
+        return "Wrong password";
+      default:
+        return "Unknown error";
+    }
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      // Sign in the user
       await logIn(email, password);
-      console.log("User signed in successfully!");
-      setError(null); // Clear any previous errors
-      navigate("/");
-    } catch (error) {
-      setError(error.message);
-      console.error("Error signing in:", error);
+      setEmail("");
+      setPassword("");
+      setError(null);
+      props.setPopup(false);
+      props.setSigninPopup(false);
+    } catch (e) {
+      setError(mapAuthCodeToMessage(e.code));
     }
-    // Reset form fields
-    setEmail("");
-    setPassword("");
-    setError(null);
-    props.setPopup(false);
-    props.setSigninPopup(false);
   };
 
   function toggleSignupPopup() {
@@ -57,22 +64,24 @@ const Signin = (props) => {
             type="email"
             placeholder="Enter email"
             onChange={handleEmailChange}
+            required
           />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
-        <Form.Group controlId="formBasicPassword">
+        <Form.Group controlId="formBasicPassword" className="mt-2">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
             placeholder="Enter Password"
             onChange={handlePasswordChange}
+            required
           />
         </Form.Group>
+        {error && <p className="error">{error}</p>}
         <Button type="submit" className="signin__submit">
           Signin
         </Button>
       </Form>
-      {error && <p className="error">{error}</p>}
       <p>
         Don't have an account yet?
         <Button

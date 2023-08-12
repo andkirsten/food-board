@@ -22,11 +22,9 @@ function NavigationBar(props) {
 
   const handleSigninButton = () => {
     handleOpenSigninPopup();
-    console.log("Sign in Button Clicked");
   };
   const handleAddPostButton = () => {
     handleOpenAddPostPopup();
-    console.log("Add Post Button Clicked");
   };
 
   const { logOut, user } = useAuth();
@@ -35,7 +33,7 @@ function NavigationBar(props) {
   const handleSignout = async () => {
     try {
       await logOut();
-      console.log("User signed out successfully!");
+
       navigate("/");
     } catch (error) {
       console.error("Error signing out:", error);
@@ -47,6 +45,7 @@ function NavigationBar(props) {
       expand="lg"
       variant="dark"
       style={{ backgroundSize: "0", backgroundColor: "#709345" }}
+      sticky="top"
     >
       <Container className="nav">
         <Navbar.Brand href="/" className="brand">

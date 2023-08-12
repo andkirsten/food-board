@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 
 import "./Register.css";
-import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const Registration = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const { register } = useAuth();
-  let navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -22,27 +19,38 @@ const Registration = (props) => {
     setPassword(event.target.value);
   };
 
+  function mapAuthCodeToMessage(authCode) {
+    switch (authCode) {
+      case "auth/email-already-in-use":
+        return "Email already in use";
+      case "auth/invalid-email":
+        return "Invalid email";
+      case "auth/weak-password":
+        return "Password must be at least 6 characters long";
+      default:
+        return "Unknown error";
+    }
+  }
+
   const registerUser = async (event) => {
     event.preventDefault();
     setError(null);
     try {
       await register(email, password);
-      console.log("User registered successfully!");
+
       setError(null);
-      navigate("/");
-    } catch (error) {
-      setError(error.message);
-      console.error("Error registering user:", error);
+      setEmail("");
+      setPassword("");
+      setError(null);
+      props.setPopup(false);
+    } catch (e) {
+      setError(mapAuthCodeToMessage(e.code));
+      console.error("Error signing in:", e);
     }
-    setEmail("");
-    setPassword("");
-    setError(null);
-    props.setPopup(false);
   };
 
   return (
     <div>
-      {error && <Alert variant="danger">{error}</Alert>}
       <Form onSubmit={registerUser}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -53,7 +61,7 @@ const Registration = (props) => {
           />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
-        <Form.Group controlId="formBasicPassword">
+        <Form.Group controlId="formBasicPassword" className="mt-2">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
@@ -61,6 +69,7 @@ const Registration = (props) => {
             onChange={handlePasswordChange}
           />
         </Form.Group>
+        {error && <p className="error">Error: {error}</p>}
         <Button variant="primary" type="submit" className="register__submit">
           Register
         </Button>
