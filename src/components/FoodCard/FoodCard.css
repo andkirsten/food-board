@@ -76,3 +76,8 @@
   display: flex;
   justify-content: space-between;
 } */
+
+.card__claimed {
+  opacity: 0.7;
+  filter: grayscale();
+}

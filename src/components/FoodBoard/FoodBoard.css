@@ -7,3 +7,7 @@
   max-width: 1200px;
   justify-items: center;
 }
+
+.foodboard__title {
+  margin: 20px 0 50px 0;
+}
