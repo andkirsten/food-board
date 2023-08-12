@@ -1,12 +1,12 @@
 import React from "react";
 import "./FoodCard.css";
 import Card from "react-bootstrap/Card";
-import Produce from "../../defaultImages/produce.png";
-import Meat from "../../defaultImages/meat.png";
-import Pantry from "../../defaultImages/pantry.png";
-import Baby from "../../defaultImages/baby.png";
-import Canned from "../../defaultImages/canned.png";
-import Misc from "../../defaultImages/misc.png";
+import Produce from "../../images/defaultImages/produce.png";
+import Meat from "../../images/defaultImages/meat.png";
+import Pantry from "../../images/defaultImages/pantry.png";
+import Baby from "../../images/defaultImages/baby.png";
+import Canned from "../../images/defaultImages/canned.png";
+import Misc from "../../images/defaultImages/misc.png";
 import { useAuth } from "../../context/AuthContext";
 import { ListGroup } from "react-bootstrap";
 import { updateDoc, doc } from "firebase/firestore";
