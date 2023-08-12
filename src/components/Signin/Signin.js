@@ -68,7 +68,7 @@ const Signin = (props) => {
           />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
-        <Form.Group controlId="formBasicPassword">
+        <Form.Group controlId="formBasicPassword" className="mt-2">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
