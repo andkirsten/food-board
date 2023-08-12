@@ -11,6 +11,22 @@ import { useAuth } from "../../context/AuthContext";
 import { ListGroup } from "react-bootstrap";
 
 const FoodCard = (props) => {
+  const foodTypeName = (foodType) => {
+    switch (foodType) {
+      case "produce":
+        return "Produce";
+      case "meat":
+        return "Meat";
+      case "pantry":
+        return "Pantry Staples";
+      case "baby":
+        return "Baby Food or Formula";
+      case "canned":
+        return "Canned Goods";
+      default:
+        return "Miscellaneous";
+    }
+  };
   const defaultImage = (foodType) => {
     switch (foodType) {
       case "produce":
@@ -40,10 +56,9 @@ const FoodCard = (props) => {
   const { user } = useAuth();
   return (
     <Card
-      style={{ width: "18em" }}
+      style={{ width: "19rem" }}
       className={props.card.claimed === false ? "" : "card__claimed"}
     >
-      <Card.Header>{props.card.foodType}</Card.Header>
       <Card.Img
         variant="top"
         src={
@@ -58,6 +73,9 @@ const FoodCard = (props) => {
 
         <Card.Text>{props.card.details}</Card.Text>
         <ListGroup variant="flush" className="list-group-flush">
+          <ListGroup.Item>
+            Food Type: {foodTypeName(props.card.foodType)}
+          </ListGroup.Item>
           <ListGroup.Item>
             Pickup Location: {props.card.pickupLocation}
           </ListGroup.Item>

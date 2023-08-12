@@ -9,5 +9,8 @@
 }
 
 .foodboard__title {
+  font-family: "Lilita One", sans-serif;
+  font-size: 36px;
+  text-align: center;
   margin: 20px 0 50px 0;
 }

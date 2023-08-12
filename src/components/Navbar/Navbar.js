@@ -1,8 +1,9 @@
 import React from "react";
 import "./Navbar.css";
-import logo from "../../FoodShareLogo.png";
-import Button from "react-bootstrap/Button";
+import logo from "../../logoWhite.png";
+import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
@@ -42,27 +43,33 @@ function NavigationBar(props) {
   };
 
   return (
-    <Navbar expand="lg" className="bg-light">
-      <Navbar.Brand href="/">
-        <img src={logo} alt="logo" className="logo" /> Food Share
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-        {user ? (
-          <div>
-            <Button onClick={handleAddPostButton} className={`header__newpost`}>
-              New Post
-            </Button>
-            <Button onClick={handleSignout} className={`header__logout`}>
-              Log Out
-            </Button>
-          </div>
-        ) : (
-          <Button onClick={handleSigninButton} className="header__signin">
-            Sign In
-          </Button>
-        )}
-      </Navbar.Collapse>
+    <Navbar
+      expand="lg"
+      variant="dark"
+      style={{ backgroundSize: "0", backgroundColor: "#709345" }}
+    >
+      <Container className="nav">
+        <Navbar.Brand href="/" className="brand">
+          <img src={logo} alt="foodshare logo" className="logo" /> Food Share
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+          {user ? (
+            <Nav>
+              <Nav.Link href="/">Food Board</Nav.Link>
+              <Nav.Link href="/about">About</Nav.Link>
+              <Nav.Link onClick={handleAddPostButton}>New Post</Nav.Link>
+              <Nav.Link onClick={handleSignout}>Log Out</Nav.Link>
+            </Nav>
+          ) : (
+            <Nav>
+              <Nav.Link href="/">Food Board</Nav.Link>
+              <Nav.Link href="/about">About</Nav.Link>
+              <Nav.Link onClick={handleSigninButton}>Sign In</Nav.Link>
+            </Nav>
+          )}
+        </Navbar.Collapse>
+      </Container>
     </Navbar>
   );
 }

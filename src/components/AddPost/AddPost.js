@@ -18,7 +18,6 @@ const AddPost = (props) => {
 
   const handleAddSubmit = async (event) => {
     event.preventDefault();
-    console.log("Add submit button clicked");
 
     try {
       const title = titleRef.current.value;
@@ -74,8 +73,8 @@ const AddPost = (props) => {
         photoRef.current.value = "";
         pickupLocationRef.current.value = "";
 
-        console.log("Post added successfully!");
         props.setPopup(false);
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error adding post:", error);
@@ -121,7 +120,7 @@ const AddPost = (props) => {
           />
         </Form.Group>
         <Button variant="primary" type="submit" className="addpost__submit">
-          Submit
+          Add Post
         </Button>
       </Form>
     </div>

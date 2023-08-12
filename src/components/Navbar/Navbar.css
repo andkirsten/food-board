@@ -1,13 +1,14 @@
 .logo {
   height: 50px;
   width: 50px;
-  margin: 0 60px 0 60px;
 }
 
-.header__signin {
-  margin-right: 60px;
+.nav {
+  line-height: 1.2;
+  font-size: 20px;
 }
 
-.header__logout {
-  margin: 0 60px 0 30px;
+.brand {
+  font-family: "Lilita One", sans-serif;
+  font-size: 35px;
 }

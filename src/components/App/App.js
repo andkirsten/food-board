@@ -7,7 +7,7 @@ import Popup from "../Popup/Popup";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import AddPost from "../AddPost/AddPost";
-import "react-bootstrap";
+import About from "../About/About";
 
 import { AuthContextProvider } from "../../context/AuthContext";
 
@@ -31,9 +31,7 @@ function App() {
         />
         <Routes>
           <Route path="/" element={<FoodBoard />} />
-          {/* <Route path="/signin" element={<Signin />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/addpost" element={<AddPost />} /> */}
+          <Route path="/about" element={<About />} />
         </Routes>
 
         {isSigninPopupOpen ? (
