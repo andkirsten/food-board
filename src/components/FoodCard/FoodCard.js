@@ -9,8 +9,27 @@ import Canned from "../../defaultImages/canned.png";
 import Misc from "../../defaultImages/misc.png";
 import { useAuth } from "../../context/AuthContext";
 import { ListGroup } from "react-bootstrap";
+import { updateDoc, doc } from "firebase/firestore";
+import { firestore } from "../../Firebase";
 
 const FoodCard = (props) => {
+  // food type names and images for card display
+  const foodTypeName = (foodType) => {
+    switch (foodType) {
+      case "produce":
+        return "Produce";
+      case "meat":
+        return "Meat";
+      case "pantry":
+        return "Pantry Staples";
+      case "baby":
+        return "Baby Food or Formula";
+      case "canned":
+        return "Canned Goods";
+      default:
+        return "Miscellaneous";
+    }
+  };
   const defaultImage = (foodType) => {
     switch (foodType) {
       case "produce":
@@ -27,23 +46,34 @@ const FoodCard = (props) => {
         return Misc;
     }
   };
+
+  // date formatting
   var carddate = new Date(props.card.date);
   let day = carddate.getDate();
   let month = carddate.getMonth() + 1;
   let year = carddate.getFullYear();
   let formatdate = day + "/" + month + "/" + year;
 
-  function test() {
-    console.log("TEST");
-  }
+  // mark claimed functionality
 
+  const markClaimed = async () => {
+    try {
+      await updateDoc(doc(firestore, "posts", props.card.id), {
+        claimed: true,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    window.location.reload();
+  };
+
+  // import user from auth context
   const { user } = useAuth();
   return (
     <Card
-      style={{ width: "18em" }}
+      style={{ width: "19rem" }}
       className={props.card.claimed === false ? "" : "card__claimed"}
     >
-      <Card.Header>{props.card.foodType}</Card.Header>
       <Card.Img
         variant="top"
         src={
@@ -59,6 +89,9 @@ const FoodCard = (props) => {
         <Card.Text>{props.card.details}</Card.Text>
         <ListGroup variant="flush" className="list-group-flush">
           <ListGroup.Item>
+            Food Type: {foodTypeName(props.card.foodType)}
+          </ListGroup.Item>
+          <ListGroup.Item>
             Pickup Location: {props.card.pickupLocation}
           </ListGroup.Item>
           <ListGroup.Item>Posted: {formatdate}</ListGroup.Item>
@@ -66,12 +99,16 @@ const FoodCard = (props) => {
             Status: {props.card.claimed ? "Claimed" : "Available"}
           </ListGroup.Item>
         </ListGroup>
-        {user && user.uid === props.card.owner ? (
-          <Card.Link variant="primary" onClick={test}>
-            {props.card.claimed === false ? "Mark as Claimed" : "Claimed"}
-          </Card.Link>
-        ) : null}
       </Card.Body>
+      {user && user.uid === props.card.owner ? (
+        <Card.Footer className="text-muted">
+          {props.card.claimed ? null : (
+            <Card.Link variant="primary" onClick={markClaimed}>
+              Mark as Claimed
+            </Card.Link>
+          )}
+        </Card.Footer>
+      ) : null}
     </Card>
   );
 };

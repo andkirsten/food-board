@@ -11,7 +11,10 @@ const FoodBoard = () => {
   const fetchPosts = async () => {
     await getDocs(query(collection(firestore, "posts"), orderBy("date")))
       .then((querySnapshot) => {
-        const data = querySnapshot.docs.map((doc) => doc.data());
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         setCards(data);
       })
       .catch((error) => {
