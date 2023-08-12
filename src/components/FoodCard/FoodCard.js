@@ -9,8 +9,11 @@ import Canned from "../../defaultImages/canned.png";
 import Misc from "../../defaultImages/misc.png";
 import { useAuth } from "../../context/AuthContext";
 import { ListGroup } from "react-bootstrap";
+import { updateDoc, doc } from "firebase/firestore";
+import { firestore } from "../../Firebase";
 
 const FoodCard = (props) => {
+  // food type names and images for card display
   const foodTypeName = (foodType) => {
     switch (foodType) {
       case "produce":
@@ -43,16 +46,28 @@ const FoodCard = (props) => {
         return Misc;
     }
   };
+
+  // date formatting
   var carddate = new Date(props.card.date);
   let day = carddate.getDate();
   let month = carddate.getMonth() + 1;
   let year = carddate.getFullYear();
   let formatdate = day + "/" + month + "/" + year;
 
-  function test() {
-    console.log("TEST");
-  }
+  // mark claimed functionality
 
+  const markClaimed = async () => {
+    try {
+      await updateDoc(doc(firestore, "posts", props.card.id), {
+        claimed: true,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    window.location.reload();
+  };
+
+  // import user from auth context
   const { user } = useAuth();
   return (
     <Card
@@ -84,12 +99,16 @@ const FoodCard = (props) => {
             Status: {props.card.claimed ? "Claimed" : "Available"}
           </ListGroup.Item>
         </ListGroup>
-        {user && user.uid === props.card.owner ? (
-          <Card.Link variant="primary" onClick={test}>
-            {props.card.claimed === false ? "Mark as Claimed" : "Claimed"}
-          </Card.Link>
-        ) : null}
       </Card.Body>
+      {user && user.uid === props.card.owner ? (
+        <Card.Footer className="text-muted">
+          {props.card.claimed ? null : (
+            <Card.Link variant="primary" onClick={markClaimed}>
+              Mark as Claimed
+            </Card.Link>
+          )}
+        </Card.Footer>
+      ) : null}
     </Card>
   );
 };
