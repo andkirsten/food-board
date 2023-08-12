@@ -2,6 +2,7 @@
   margin: 20px 0 10px;
 }
 
-/* .signin__signup {
-  padding: 0;
-} */
+.error {
+  color: red;
+  margin: 10px 0;
+}

@@ -39,8 +39,9 @@ const About = () => {
         </p>
       </div>
       <div className="about-footer">
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
+        <Link className="footer-link" to="/">
+          Visit the food board
+        </Link>
       </div>
     </div>
   );
