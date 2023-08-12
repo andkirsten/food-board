@@ -27,10 +27,22 @@ const FoodCard = (props) => {
         return Misc;
     }
   };
+  var carddate = new Date(props.card.date);
+  let day = carddate.getDate();
+  let month = carddate.getMonth() + 1;
+  let year = carddate.getFullYear();
+  let formatdate = day + "/" + month + "/" + year;
+
+  function test() {
+    console.log("TEST");
+  }
 
   const { user } = useAuth();
   return (
-    <Card style={{ width: "18em" }}>
+    <Card
+      style={{ width: "18em" }}
+      className={props.card.claimed === false ? "" : "card__claimed"}
+    >
       <Card.Header>{props.card.foodType}</Card.Header>
       <Card.Img
         variant="top"
@@ -49,13 +61,15 @@ const FoodCard = (props) => {
           <ListGroup.Item>
             Pickup Location: {props.card.pickupLocation}
           </ListGroup.Item>
-          <ListGroup.Item>Posted: {props.card.date}</ListGroup.Item>
+          <ListGroup.Item>Posted: {formatdate}</ListGroup.Item>
           <ListGroup.Item>
             Status: {props.card.claimed ? "Claimed" : "Available"}
           </ListGroup.Item>
         </ListGroup>
         {user && user.uid === props.card.owner ? (
-          <Card.Link variant="primary">Mark as claimed</Card.Link>
+          <Card.Link variant="primary" onClick={test}>
+            {props.card.claimed === false ? "Mark as Claimed" : "Claimed"}
+          </Card.Link>
         ) : null}
       </Card.Body>
     </Card>
