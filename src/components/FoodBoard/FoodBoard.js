@@ -34,12 +34,6 @@ const FoodBoard = () => {
     return a.claimed > b.claimed ? 1 : -1;
   });
 
-  // const searchBar = document.getElementById("searchBar");
-  // console.log(searchBar);
-  // searchBar.addEventListener("keyup", (e) => {
-  //   console.log(e.target.value);
-  // });
-
   const handleSearch = (e) => {
     const userSearch = e.target.value;
     const filteredFoods = originalCards.filter((food) => {
