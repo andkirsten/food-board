@@ -29,7 +29,7 @@ const AddPost = (props) => {
       const foodType = foodTypeRef.current.value;
       const photo = photoRef.current.files[0];
       const pickupLocation = pickupLocationRef.current.value;
-      const contactInfo = contactInfoRef.current.value;
+      const contact = contactInfoRef.current.value;
       const claimed = false;
       const date = new Date().toISOString();
       const owner = user.uid;
@@ -48,7 +48,7 @@ const AddPost = (props) => {
           foodType,
           photoUrl,
           pickupLocation,
-          contactInfo,
+          contact,
           claimed,
           date,
           owner,
@@ -71,7 +71,7 @@ const AddPost = (props) => {
           foodType,
           photoUrl: "",
           pickupLocation,
-          contactInfo,
+          contact,
           claimed,
           date,
           owner,
