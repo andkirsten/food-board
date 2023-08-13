@@ -34,4 +34,5 @@ FoodShare is a community-driven app that aims to reduce food waste by connecting
 - React
 - Firebase (Authentication, Firestore, Storage)
 - React Router
-- Bootstrap (for styling)
+- React Bootstrap (for styling)
+- Google Fonts
