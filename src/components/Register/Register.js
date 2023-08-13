@@ -35,6 +35,7 @@ const Registration = (props) => {
   const registerUser = async (event) => {
     event.preventDefault();
     setError(null);
+    props.setLoad(true);
     try {
       await register(email, password);
 
@@ -43,9 +44,11 @@ const Registration = (props) => {
       setPassword("");
       setError(null);
       props.setPopup(false);
+      props.setLoad(false);
     } catch (e) {
       setError(mapAuthCodeToMessage(e.code));
       console.error("Error signing in:", e);
+      props.setLoad(false);
     }
   };
 
@@ -70,7 +73,12 @@ const Registration = (props) => {
           />
         </Form.Group>
         {error && <p className="error">Error: {error}</p>}
-        <Button variant="primary" type="submit" className="register__submit">
+        <Button
+          variant="primary"
+          type="submit"
+          className="register__submit"
+          disabled={props.load}
+        >
           Register
         </Button>
       </Form>

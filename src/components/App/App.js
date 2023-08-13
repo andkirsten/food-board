@@ -20,6 +20,8 @@ function App() {
 
   const [isSigninPopupOpen, setSigninPopup] = React.useState(false);
 
+  const [load, setLoad] = React.useState(false);
+
   return (
     <div className="App">
       <AuthContextProvider>
@@ -47,6 +49,8 @@ function App() {
               setSigninPopup={setSigninPopup}
               setSignupPopup={setRegisterPopup}
               setAddPostPopup={setAddPostPopup}
+              load={load}
+              setLoad={setLoad}
             />
           </Popup>
         ) : (
@@ -64,6 +68,8 @@ function App() {
               setSigninPopup={setSigninPopup}
               setSignupPopup={setRegisterPopup}
               setAddPostPopup={setAddPostPopup}
+              load={load}
+              setLoad={setLoad}
             />
           </Popup>
         ) : (
@@ -76,7 +82,7 @@ function App() {
             isPopupOpen={isPopupOpen}
             title={"Add Post"}
           >
-            <AddPost setPopup={setPopup} />
+            <AddPost setPopup={setPopup} load={load} setLoad={setLoad} />
           </Popup>
         ) : (
           ""
