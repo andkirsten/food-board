@@ -10,9 +10,7 @@ const FoodBoard = () => {
   const [originalCards, setOriginalCards] = React.useState([]);
 
   const fetchPosts = async () => {
-    await getDocs(
-      query(collection(firestore, "posts"), orderBy("date", "desc"))
-    )
+    await getDocs(query(collection(firestore, "posts").orderBy("date", "desc")))
       .then((querySnapshot) => {
         const data = querySnapshot.docs.map((doc) => ({
           id: doc.id,
