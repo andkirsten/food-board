@@ -82,6 +82,7 @@ const FoodCard = (props) => {
             : defaultImage(props.card.foodType)
         }
         alt={props.card.title}
+        style={{ height: "200px", objectFit: "cover" }}
       />
       <Card.Body>
         <Card.Title>{props.card.title}</Card.Title>
