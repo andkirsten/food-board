@@ -10,7 +10,9 @@ const FoodBoard = () => {
   const [originalCards, setOriginalCards] = React.useState([]);
 
   const fetchPosts = async () => {
-    await getDocs(query(collection(firestore, "posts"), orderBy("date")))
+    await getDocs(
+      query(collection(firestore, "posts"), orderBy("date", "desc"))
+    )
       .then((querySnapshot) => {
         const data = querySnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -59,6 +61,7 @@ const FoodBoard = () => {
   return (
     <div>
       <h2 className="foodboard__title">FoodBoard</h2>
+
       <div id="searchContainer">
         <input
           type="text"

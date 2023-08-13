@@ -49,7 +49,7 @@ function NavigationBar(props) {
     >
       <Container className="nav">
         <Navbar.Brand href="/" className="brand">
-          <img src={logo} alt="foodshare logo" className="logo" /> Food Share
+          <img src={logo} alt="foodshare logo" className="logo" /> FoodShare
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">

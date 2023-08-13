@@ -8,7 +8,7 @@ const Popup = (props) => {
     props.setFormPopup(false);
   }
   return (
-    <Modal show={props.isPopupOpen} onHide={closePopup}>
+    <Modal size="xl" show={props.isPopupOpen} onHide={closePopup}>
       <Modal.Header closeButton>
         <Modal.Title>{props.title}</Modal.Title>
       </Modal.Header>

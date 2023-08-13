@@ -95,11 +95,14 @@ const FoodCard = (props) => {
             Pickup Location: {props.card.pickupLocation}
           </ListGroup.Item>
           <ListGroup.Item>Posted: {formatdate}</ListGroup.Item>
-          <ListGroup.Item>
-            Status: {props.card.claimed ? "Claimed" : "Available"}
-          </ListGroup.Item>
         </ListGroup>
       </Card.Body>
+
+      {!props.card.claimed ? (
+        <Card.Footer>Contact: {props.card.contact}</Card.Footer>
+      ) : (
+        <Card.Footer>Claimed</Card.Footer>
+      )}
       {user && user.uid === props.card.owner ? (
         <Card.Footer className="text-muted">
           {props.card.claimed ? null : (

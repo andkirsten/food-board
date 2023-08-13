@@ -64,6 +64,7 @@ const Signin = (props) => {
             type="email"
             placeholder="Enter email"
             onChange={handleEmailChange}
+            autoComplete="current-email"
             required
           />
           <Form.Text className="text-muted"></Form.Text>
@@ -74,6 +75,7 @@ const Signin = (props) => {
             type="password"
             placeholder="Enter Password"
             onChange={handlePasswordChange}
+            autoComplete="current-password"
             required
           />
         </Form.Group>

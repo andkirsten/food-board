@@ -4,11 +4,11 @@ import Signin from "../Signin/Signin";
 import Register from "../Register/Register";
 import FoodBoard from "../FoodBoard/FoodBoard";
 import Popup from "../Popup/Popup";
+import Footer from "../Footer/Footer";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import AddPost from "../AddPost/AddPost";
 import About from "../About/About";
-
 import { AuthContextProvider } from "../../context/AuthContext";
 
 function App() {
@@ -33,6 +33,7 @@ function App() {
           <Route path="/" element={<FoodBoard />} />
           <Route path="/about" element={<About />} />
         </Routes>
+        <Footer />
 
         {isSigninPopupOpen ? (
           <Popup

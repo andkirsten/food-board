@@ -17,6 +17,7 @@ const AddPost = (props) => {
   const foodTypeRef = useRef("produce");
   const photoRef = useRef(null);
   const pickupLocationRef = useRef(null);
+  const contactInfoRef = useRef(null);
 
   const handleAddSubmit = async (event) => {
     event.preventDefault();
@@ -28,6 +29,7 @@ const AddPost = (props) => {
       const foodType = foodTypeRef.current.value;
       const photo = photoRef.current.files[0];
       const pickupLocation = pickupLocationRef.current.value;
+      const contactInfo = contactInfoRef.current.value;
       const claimed = false;
       const date = new Date().toISOString();
       const owner = user.uid;
@@ -46,6 +48,7 @@ const AddPost = (props) => {
           foodType,
           photoUrl,
           pickupLocation,
+          contactInfo,
           claimed,
           date,
           owner,
@@ -56,6 +59,7 @@ const AddPost = (props) => {
         foodTypeRef.current.value = "produce";
         photoRef.current.value = "";
         pickupLocationRef.current.value = "";
+        contactInfoRef.current.value = "";
 
         props.setPopup(false);
         window.location.reload();
@@ -67,6 +71,7 @@ const AddPost = (props) => {
           foodType,
           photoUrl: "",
           pickupLocation,
+          contactInfo,
           claimed,
           date,
           owner,
@@ -78,6 +83,7 @@ const AddPost = (props) => {
         foodTypeRef.current.value = "produce";
         photoRef.current.value = "";
         pickupLocationRef.current.value = "";
+        contactInfoRef.current.value = "";
 
         props.setPopup(false);
         window.location.reload();
@@ -107,6 +113,10 @@ const AddPost = (props) => {
             ref={detailsRef}
             required
           />
+          <Form.Text className="text-muted">
+            Please include details such as quantity, quality, expiration date,
+            etc.
+          </Form.Text>
         </Form.Group>
         <Form.Group controlId="postFoodType" className="mb-2">
           <Form.Label>Select Food Type</Form.Label>
@@ -131,8 +141,24 @@ const AddPost = (props) => {
             ref={pickupLocationRef}
             required
           />
+          <Form.Text className="text-muted">
+            Please choose a convenient location for pickup &#40;e.g. library,
+            park, etc.&#41;
+          </Form.Text>
         </Form.Group>
-
+        <Form.Group controlId="postContactInfo" className="mb-2">
+          <Form.Label>Contact Info</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter contact info"
+            ref={contactInfoRef}
+            required
+          />
+          <Form.Text className="text-muted">
+            Please enter a name and contact preferences &#40;e.g. email, phone
+            number, etc.&#41;
+          </Form.Text>
+        </Form.Group>
         <Button variant="primary" type="submit" className="addpost__submit">
           Add Post
         </Button>
