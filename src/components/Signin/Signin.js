@@ -35,6 +35,7 @@ const Signin = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    props.setLoad(true);
 
     try {
       await logIn(email, password);
@@ -43,8 +44,10 @@ const Signin = (props) => {
       setError(null);
       props.setPopup(false);
       props.setSigninPopup(false);
+      props.setLoad(false);
     } catch (e) {
       setError(mapAuthCodeToMessage(e.code));
+      props.setLoad(false);
     }
   };
 
@@ -80,7 +83,7 @@ const Signin = (props) => {
           />
         </Form.Group>
         {error && <p className="error">{error}</p>}
-        <Button type="submit" className="signin__submit">
+        <Button type="submit" className="signin__submit" disabled={props.load}>
           Signin
         </Button>
       </Form>
@@ -90,6 +93,7 @@ const Signin = (props) => {
           variant="link"
           onClick={toggleSignupPopup}
           className="signin__signup"
+          disabled={props.load}
         >
           Sign Up
         </Button>

@@ -21,9 +21,9 @@ const AddPost = (props) => {
 
   const handleAddSubmit = async (event) => {
     event.preventDefault();
-
+    props.setLoad(true);
     try {
-      //set data values
+      // set data values
       const title = titleRef.current.value;
       const details = detailsRef.current.value;
       const foodType = foodTypeRef.current.value;
@@ -34,7 +34,7 @@ const AddPost = (props) => {
       const date = new Date().toISOString();
       const owner = user.uid;
 
-      //if photo, upload photo to storage
+      // if photo, upload photo to storage
       if (photo) {
         const storage = getStorage();
         const storageRef = ref(storage, `images/${photo.name}`);
@@ -86,10 +86,12 @@ const AddPost = (props) => {
         contactInfoRef.current.value = "";
 
         props.setPopup(false);
+        props.setLoad(false);
         window.location.reload();
       }
     } catch (error) {
       console.error(error);
+      props.setLoad(false);
     }
   };
 
@@ -159,7 +161,12 @@ const AddPost = (props) => {
             number, etc.&#41;
           </Form.Text>
         </Form.Group>
-        <Button variant="primary" type="submit" className="addpost__submit">
+        <Button
+          variant="primary"
+          type="submit"
+          className="addpost__submit"
+          disabled={props.load}
+        >
           Add Post
         </Button>
       </Form>
