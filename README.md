@@ -4,6 +4,8 @@
 
 FoodShare is a community-driven app that aims to reduce food waste by connecting people who have surplus food with those in need.
 
+[Foodshare Live Site](https://food-share-25d01.web.app/)
+
 ## Features
 
 - **Post Food Items:** Users can post details about surplus food items they want to share, including type, description, pickup location, and availability status.
